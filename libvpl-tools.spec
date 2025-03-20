@@ -2,14 +2,15 @@
 Summary:	Intel Video Processing Library Tools
 Summary(pl.UTF-8):	Narzędzia do biblioteki przetwarzania obrazu Intel VPL
 Name:		libvpl-tools
-Version:	1.0.0
+Version:	1.3.0
 Release:	1
 License:	MIT
 Group:		Libraries
 #Source0Download: https://github.com/intel/libvpl-tools/releases
 Source0:	https://github.com/intel/libvpl-tools/archive/v%{version}/libvpl-tools-%{version}.tar.gz
-# Source0-md5:	e83ecee5f45d83b450597d4f7b982e9a
+# Source0-md5:	2241ab0409c15f218b59ba7124cbf5ff
 Patch0:		%{name}-types.patch
+Patch1:		%{name}-libdrm.patch
 URL:		https://www.intel.com/content/www/us/en/developer/tools/vpl/overview.html
 BuildRequires:	cmake >= 3.13.0
 BuildRequires:	libdrm-devel >= 2.4.91
@@ -55,7 +56,8 @@ Przykładowe programy do biblioteki Intel VPL.
 
 %prep
 %setup -q
-%patch0 -p1
+%patch -P0 -p1
+%patch -P1 -p1
 
 %build
 %cmake -B build
@@ -84,7 +86,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/vpl-import-export
 %attr(755,root,root) %{_bindir}/vpl-inspect
 %dir %{_libdir}/vpl-tools
-%attr(755,root,root) %{_libdir}/vpl-tools/libvpl_wayland.so
+%attr(755,root,root) %{_libdir}/vpl-tools/libvpl_wayland.so.*.*.*
+%{_libdir}/vpl-tools/libvpl_wayland.so
 
 %files examples
 %defattr(644,root,root,755)
@@ -94,4 +97,5 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/sample_multi_transcode
 %attr(755,root,root) %{_bindir}/sample_vpp
 %attr(755,root,root) %{_bindir}/system_analyzer
-%attr(755,root,root) %{_libdir}/libcttmetrics.so
+%attr(755,root,root) %{_libdir}/libcttmetrics.so.*.*.*
+%{_libdir}/libcttmetrics.so
